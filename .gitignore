@@ -1,0 +1,12 @@
+*.pyc
+__pycache__
+/readme.html
+.env
+.secret
+
+# Trash
+*~
+*.sw[po]
+*.db
+Desktop.ini
+.DS_Store

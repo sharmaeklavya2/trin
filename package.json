@@ -1,0 +1,12 @@
+{
+  "name": "trin",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Transliterate among Indian languages.",
+  "main": "trin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eklavya Sharma",
+  "license": "MIT"
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<title>Trin test page</title>
+<link rel="stylesheet" href="https://sharmaeklavya2.github.io/funcToForm/funcToForm.css" />
+<style>
+input[type="text"], .f2f-ostream {font-size: 1.6em;}
+</style>
+<!--<link rel="stylesheet" href="http://localhost:8080/websites/funcToForm/funcToForm.css" />-->
+<script type="text/javascript" src="https://sharmaeklavya2.github.io/funcToForm/funcToForm.js"></script>
+<!--<script type="text/javascript" src="http://localhost:8080/websites/funcToForm/funcToForm.js"></script>-->
+<script type="module" src="trin.js"></script>
+<script type="module">
+'use strict';
+import {SCRIPTS_LIST, trin} from './trin.js';
+window.addEventListener('DOMContentLoaded', function() {
+    const paramText = new Param('text', new TextWidget(null, false, '', ''), 'text');
+    const scriptOptions = SCRIPTS_LIST.map(script => new SelectOption(script.name, script));
+    const paramTo = new Param('target', new SelectWidget(scriptOptions));
+    const paramGroup = new ParamGroup('myForm', [paramText, paramTo]);
+    createForm('myApp', paramGroup, function (input, stdout) {stdout.log(trin(input.text, input.target));});
+});
+</script>
+</head>
+
+<body>
+<h1>Trin</h1>
+<p>Trin is a tool to transliterate among Indian scripts.
+Trin can, to some extent, help you read and write (but not necessarily understand)
+text written in an Indian script if you can understand some other Indian script.</p>
+<div id="myApp"></div>
+</body>
+</html>
