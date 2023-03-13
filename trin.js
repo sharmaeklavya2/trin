@@ -65,7 +65,7 @@ export function getScriptAndOffset(codePoint) {
     }
 }
 
-export function trinWord(text, srcScript, targetScript) {
+export function trinWord(text, srcScript, targetScript, enhanced=true) {
     // assumes all characters in text are in srcScript. Converts to targetScript.
     if(srcScript === null || srcScript === targetScript) {
         return text;
@@ -76,7 +76,7 @@ export function trinWord(text, srcScript, targetScript) {
         const oldCodePoint = text.codePointAt(i);
         newCodePoints[i] = oldCodePoint - srcScript.startPos + targetScript.startPos;
     }
-    if(srcScript === SCRIPTS.kannada && targetScript === SCRIPTS.devanagari) {
+    if(enhanced && srcScript === SCRIPTS.kannada && targetScript === SCRIPTS.devanagari) {
         const lastOffset = newCodePoints[n-1] - targetScript.startPos;
         if(lastOffset >= 0x0015 && lastOffset <= 0x0039) {
             newCodePoints.push(targetScript.startPos + 0x003e);
@@ -104,10 +104,10 @@ export function forEachWord(text, f) {
     f(text.slice(prevI), prevScript);
 }
 
-export function trin(text, targetScript) {
+export function trin(text, targetScript, enhanced=true) {
     const frags = [];
     function f(word, srcScript) {
-        const newWord = trinWord(word, srcScript, targetScript);
+        const newWord = trinWord(word, srcScript, targetScript, enhanced);
         frags.push(newWord);
     }
     forEachWord(text, f);
