@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', function() {
     const scriptOptions = SCRIPTS_LIST.map(script => new SelectOption(script.name, script));
     const paramTo = new Param('target', new SelectWidget(scriptOptions));
     const paramBasic = new Param('basicMode', new CheckBoxWidget(),
-        'basic mode', 'Use character-level replacement instead of word-level heuristics?');
+        'basic mode', 'Disable word-level heuristics. Use character-level replacement only.');
     const paramGroup = new ParamGroup('myForm', [paramText, paramTo, paramBasic]);
     createForm('myApp', paramGroup, function (input, stdout) {
         stdout.log(trin(input.text, input.target, !input.basicMode));});
