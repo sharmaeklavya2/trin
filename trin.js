@@ -11,9 +11,9 @@ function getBit(iArr, i, size=16) {
     return Boolean(bit);
 }
 
-export class Script {
-    static blockSize = 0x80;
+const blockSize = 0x80;
 
+export class Script {
     constructor(shortName, name, startPos, mask=null) {
         this.shortName = shortName;
         this.name = name;
@@ -27,7 +27,7 @@ export class Script {
     }
 
     isValid(codePoint) {
-        if(codePoint < this.startPos || codePoint >= this.startPos + Script.blockSize) {
+        if(codePoint < this.startPos || codePoint >= this.startPos + blockSize) {
             return false;
         }
         return (this.mask === null) ? true : getBit(this.mask, codePoint);
@@ -54,8 +54,8 @@ export const SCRIPTS = {}
 const startToScript = new Map();
 
 export function getScriptAndOffset(codePoint) {
-    const blockOffset = codePoint & 0x7f;
-    const blockStartPoint = codePoint & (~0x7f);
+    const blockOffset = codePoint & (blockSize - 1);
+    const blockStartPoint = codePoint & (-blockSize);
     if(blockStartPoint === devStartPoint && devCommonCodePoints.has(codePoint)) {
         return [null, blockOffset];
     }
