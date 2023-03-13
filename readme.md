@@ -4,7 +4,7 @@
 `trin` can, to some extent, help you read and write (but not necessarily understand)
 text written in an Indian script if you can understand some other Indian script.
 
-`frontend.html` offers a simple transliteration UI.
+`index.html` offers a simple transliteration UI.
 
 I plan to make a chrome extension that modifies text on pages and shows original text for each word
 when the user hovers on it.
