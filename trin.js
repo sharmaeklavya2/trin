@@ -2,35 +2,17 @@
 
 'use strict';
 
-const full1 = 0xffff;
-
-function getBit(iArr, i, size=16) {
-    const hi = i / size, lo = i % size;
-    const myByte = iArr[hi];
-    const bit = (myByte >> lo) & 1;
-    return Boolean(bit);
-}
-
 const blockSize = 0x80;
 
 export class Script {
-    constructor(shortName, name, startPos, mask=null) {
+    constructor(shortName, name, startPos) {
         this.shortName = shortName;
         this.name = name;
         this.startPos = startPos;
-        this.mask = mask;
     }
 
     toString() {
-        const maskStr = (this.mask === null) ? ', ?' : '';
-        return `Script(${this.name}, ${this.startPos}${maskStr})`;
-    }
-
-    isValid(codePoint) {
-        if(codePoint < this.startPos || codePoint >= this.startPos + blockSize) {
-            return false;
-        }
-        return (this.mask === null) ? true : getBit(this.mask, codePoint);
+        return `Script(${this.name}, ${this.startPos})`;
     }
 }
 
