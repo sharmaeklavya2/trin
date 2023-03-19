@@ -15,16 +15,17 @@ input[type="text"], .f2f-ostream {font-size: 1.6em;}
 <script type="module" src="trin.js"></script>
 <script type="module">
 'use strict';
-import {SCRIPTS_LIST, trin} from './trin.js';
+import * as trin from './trin.js';
+window.trin = trin;
 window.addEventListener('DOMContentLoaded', function() {
     const paramText = new Param('text', new TextWidget(null, false, '', ''), 'text');
-    const scriptOptions = SCRIPTS_LIST.map(script => new SelectOption(script.name, script));
+    const scriptOptions = trin.SCRIPTS_LIST.map(script => new SelectOption(script.name, script));
     const paramTo = new Param('target', new SelectWidget(scriptOptions));
     const paramBasic = new Param('basicMode', new CheckBoxWidget(),
         'basic mode', 'Disable word-level heuristics. Use character-level replacement only.');
     const paramGroup = new ParamGroup('myForm', [paramText, paramTo, paramBasic]);
     createForm('myApp', paramGroup, function (input, stdout) {
-        stdout.log(trin(input.text, input.target, !input.basicMode));});
+        stdout.log(trin.trin(input.text, input.target, !input.basicMode));});
 });
 </script>
 </head>

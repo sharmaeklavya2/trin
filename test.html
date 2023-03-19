@@ -9,9 +9,8 @@
 <script src="https://unpkg.com/papaparse@5.4.0/papaparse.min.js"></script>
 <script type="module" src="test.js"></script>
 <script type="module">
-import {addTests, getCsvRows} from './test.js';
-window.addTests = addTests;
-window.getCsvRows = getCsvRows;
+import * as trinTest from './test.js';
+window.trinTest = trinTest;
 </script>
 <link rel="stylesheet" href="test.css" />
 </head>
