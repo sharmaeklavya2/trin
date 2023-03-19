@@ -1,0 +1,32 @@
+body {
+    --trin-hov-text-color: #202020;
+    --trin-hov-bg-color: #c0c0c0;
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        --trin-hov-text-color: #c8c8c8;
+        --trin-hov-bg-color: #404040;
+    }
+}
+
+.trin-scaff-elem {
+    position: relative;
+}
+.trin-scaff-elem:hover > .trin-hover,
+.trin-scaff-elem:focus > .trin-hover {
+    visibility: visible;
+}
+.trin-hover {
+    visibility: hidden;
+    position: absolute;
+    top: 1.1em;
+    left: 0.5em;
+    z-index: 100;
+
+    color: var(--trin-hov-text-color);
+    background-color: var(--trin-hov-bg-color);
+    opacity: 0.9;
+    border-radius: 0.2em;
+    padding: 0.2em 0.3em;
+    white-space: nowrap;
+}

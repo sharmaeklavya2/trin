@@ -107,6 +107,68 @@ export function detectScripts(text) {
     return scripts;
 }
 
+export function buildScaffolding(elem) {
+    let count = 0;
+    if(!(elem.classList.contains('trin-scaff-elem') || elem.classList.contains('no-trin-scaff'))) {
+        const children = Array.from(elem.childNodes);
+        for(const child of children) {
+            if(child.nodeType === 3) { // text node
+                const wns = [];  // words n' scripts
+                forEachWord(child.nodeValue, (word, script) => {wns.push([word, script]);});
+                if(wns.length >= 2 || (wns.length === 1 && wns[0][1] !== null)) {
+                    for(const [word, script] of wns) {
+                        let newChild = null;
+                        if(script !== null) {
+                            newChild = document.createElement('span');
+                            newChild.innerHTML = word;
+                            newChild.classList.add('trin-scaff-elem');
+                            newChild.setAttribute('data-orig-text', word);
+                            newChild.setAttribute('tabindex', '0');
+                            count += 1;
+                        }
+                        else {
+                            newChild = document.createTextNode(word);
+                        }
+                        elem.insertBefore(newChild, child);
+                    }
+                    elem.removeChild(child);
+                }
+            }
+            else if(child.nodeType === 1) {
+                count += buildScaffolding(child);
+            }
+        }
+    }
+    return count;
+}
+
+export function trinElem(elem, docScript=null, hovScript=null, enhanced=true) {
+    const origWord = elem.dataset.origText;
+    const [origScript] = getScriptAndOffset(origWord.codePointAt(0));
+    if(docScript === null) {
+        docScript = origScript;
+    }
+    if(hovScript === null) {
+        hovScript = origScript;
+    }
+    const docWord = trinWord(origWord, origScript, docScript, enhanced);
+    elem.innerHTML = docWord;
+    if(hovScript !== docScript) {
+        const hovWord = trinWord(origWord, origScript, hovScript, enhanced);
+        const hovElem = document.createElement('span');
+        hovElem.classList.add('trin-hover');
+        hovElem.innerHTML = hovWord;
+        elem.appendChild(hovElem);
+    }
+}
+
+export function trinAllElems(docScript=null, hovScript=null, enhanced=true) {
+    const trinScaffElems = document.getElementsByClassName('trin-scaff-elem');
+    for(const elem of trinScaffElems) {
+        trinElem(elem, docScript, hovScript, enhanced);
+    }
+}
+
 function init() {
     for(const script of SCRIPTS_LIST) {
         SCRIPTS[script.name] = script;
