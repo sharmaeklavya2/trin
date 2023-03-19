@@ -96,6 +96,17 @@ export function trin(text, targetScript, enhanced=true) {
     return frags.join('');
 }
 
+export function detectScripts(text) {
+    let scripts = [];
+    function f(word, script) {
+        if(script !== null) {
+            scripts.push(script);
+        }
+    }
+    forEachWord(text, f);
+    return scripts;
+}
+
 function init() {
     for(const script of SCRIPTS_LIST) {
         SCRIPTS[script.name] = script;

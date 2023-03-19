@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<title>Trin Tests</title>
+<script type="module" src="trin.js"></script>
+<script src="https://unpkg.com/papaparse@5.4.0/papaparse.min.js"></script>
+<script type="module" src="test.js"></script>
+<script type="module">
+import {addTests, getCsvRows} from './test.js';
+window.addTests = addTests;
+window.getCsvRows = getCsvRows;
+</script>
+<link rel="stylesheet" href="test.css" />
+</head>
+<body>
+<h1>Trin Tests</h1>
+<ol id="tests"></ol>
+<div id="errors"></div>
+</body>
+</html>
