@@ -178,3 +178,82 @@ function init() {
 }
 
 init();
+
+//=[ UI ]=======================================================================
+
+let trinRoot = null;
+
+const trinRootContents = `
+<div class="trin-gas"></div>
+<div id="trin-overlay"></div>
+<form id="trin-form" action="javascript:void(0);">
+    <header>
+        <div class="trin-heading">Trin</div>
+        <div class="trin-close-btn" id="trin-form-close-btn"></div>
+    </header>
+    <div class="trin-form-body">
+        <div class="trin-input-pair">
+            <label for="trin-doc-input">Target script</label>
+            <select id="trin-doc-input" name="trinDocScript"></select>
+        </div>
+        <div class="trin-input-pair">
+            <label for="trin-hov-input">Hover script</label>
+            <select id="trin-hov-input" name="trinHovScript"></select>
+        </div>
+        <div class="trin-input-pair">
+            <label for="trin-basic-input">Basic mode</label>
+            <input type="checkbox" id="trin-basic-input" name="trinBasicMode"/>
+        </div>
+    </div>
+    <button type="submit" id="trin-submit">Transliterate</button>
+</form>
+<div class="trin-gas"></div>
+`;
+
+function addOptionElem(selectElem, value, label) {
+    const elem = document.createElement('option');
+    elem.setAttribute('value', value);
+    elem.innerHTML = label;
+    selectElem.appendChild(elem);
+}
+
+export function initUI() {
+    trinRoot = document.createElement('div');
+    trinRoot.setAttribute('id', 'trin-root');
+    trinRoot.classList.add('disabled');
+    trinRoot.innerHTML = trinRootContents;
+    document.body.appendChild(trinRoot);
+
+    function toggleTrinRoot(ev) {
+        trinRoot.classList.toggle('disabled');
+    }
+
+    const trinButton = document.createElement('div');
+    trinButton.setAttribute('id', 'trin-main-button');
+    trinButton.innerHTML = '\u091f\u094d\u0930';
+    document.body.appendChild(trinButton);
+    trinButton.addEventListener('click', toggleTrinRoot);
+    document.getElementById('trin-form-close-btn').addEventListener('click', toggleTrinRoot);
+    document.getElementById('trin-overlay').addEventListener('click', toggleTrinRoot);
+
+    for(const scriptType of ['doc', 'hov']) {
+        const selectElem = document.getElementById(`trin-${scriptType}-input`);
+        addOptionElem(selectElem, 'preserve', 'Preserve original');
+        for(const script of SCRIPTS_LIST) {
+            addOptionElem(selectElem, script.name, script.name);
+        }
+    }
+
+    const trinForm = document.getElementById('trin-form');
+    trinForm.addEventListener('submit', function (ev) {
+        const formData = new FormData(trinForm);
+        const docScriptName = formData.get('trinDocScript');
+        const docScript = (docScriptName === 'preserve') ? null : SCRIPTS[docScriptName];
+        const hovScriptName = formData.get('trinHovScript');
+        const hovScript = (hovScriptName === 'preserve') ? null : SCRIPTS[hovScriptName];
+        const basicMode = formData.has('trinBasicMode');
+        buildScaffolding(document.body);
+        trinAllElems(docScript, hovScript, !basicMode);
+        toggleTrinRoot();
+    });
+}

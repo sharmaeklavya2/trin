@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<title>Trin Example Page</title>
+<link rel="icon" type="image/png" href="icons/32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="icons/256.png" sizes="256x256" />
+<link rel="stylesheet" href="trin.css" />
+<script type="module" src="trin.js"></script>
+<script type="module">
+import * as trin from './trin.js';
+window.trin = trin;
+trin.initUI();
+</script>
+<style>
+/* colors */
+body {
+    --bg-color: white;
+    --text-color: #202020;
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        --bg-color: #1b1e20;
+        --text-color: #c8c8c8;
+    }
+}
+/* small-screen */
+@media (max-width: 820px) {
+    body {margin: 1em;}
+}
+@media (min-width: 821px) {
+    body {margin: 1em 2em;}
+}
+/* generic */
+body {
+    font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Open Sans", "Helvetica Neue", sans-serif;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    line-height: 1.4;
+}
+p {
+    font-size: 1.4em;
+}
+</style>
+</head>
+
+<body>
+<h1>Trin</h1>
+<p>
+Humpty Dumpty बैठे थे दीवार पे।
+<br>Humpty Dumpty गिर पड़े धड़ाम से।
+<br>ರಾಜನ ಪುರುಷರು ಮತ್ತು ರಾಜನ ಕುದುರೆ,
+<br>ಹಂಪ್ಟಿಯನ್ನು ಒಟ್ಟಿಗೆ ಸೇರಿಸಿ.
+</p>
+<p>
+Humpty ਕੰਧ 'ਤੇ ਬੈਠਾ ਸੀ।
+<br>Humpty ਇੱਕ ਠਹਾਕੇ ਨਾਲ ਡਿੱਗ ਪਿਆ।
+<br>রাজার লোক আর রাজার ঘোড়া।
+<br>একসাথে Humpty যোগ করুন।
+</p>
+</body>
+</html>

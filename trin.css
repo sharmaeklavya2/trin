@@ -1,11 +1,21 @@
 body {
-    --trin-hov-text-color: #202020;
+    --trin-bg-color: white;
+    --trin-text-color: #202020;
     --trin-hov-bg-color: #c0c0c0;
+    --trin-large-shadow: 0 4px 8px rgba(0,0,0,0.4), 0 4px 12px 4px rgba(0,0,0,0.2);
+    --trin-light-tint: rgba(0,0,0, 0.05);
+    --trin-medium-tint: rgba(0,0,0, 0.1);
+    --trin-heavy-tint: rgba(0,0,0, 0.2);
 }
 @media (prefers-color-scheme: dark) {
     body {
-        --trin-hov-text-color: #c8c8c8;
+        --trin-bg-color: #1b1e20;
+        --trin-text-color: #c8c8c8;
         --trin-hov-bg-color: #404040;
+        --trin-large-shadow; 0 4px 8px rgba(255,255,255,0.4), 0 4px 12px 4px rgba(255,255,255,0.2);
+        --trin-light-tint: rgba(255,255,255, 0.05);
+        --trin-medium-tint: rgba(255,255,255, 0.1);
+        --trin-heavy-tint: rgba(255,255,255, 0.2);
     }
 }
 
@@ -23,10 +33,145 @@ body {
     left: 0.5em;
     z-index: 100;
 
-    color: var(--trin-hov-text-color);
+    color: var(--trin-text-color);
     background-color: var(--trin-hov-bg-color);
     opacity: 0.9;
     border-radius: 0.2em;
     padding: 0.2em 0.3em;
     white-space: nowrap;
+}
+
+#trin-root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#trin-root.disabled {
+    display: none;
+}
+.trin-gas {
+    width: 100%;
+    height: 100%;
+    flex-shrink: 9999999;
+}
+#trin-form {
+    z-index: 2010;
+    pointer-events: auto;
+    box-shadow: var(--trin-large-shadow);
+    background-color: var(--trin-hov-bg-color);
+    border-radius: 0.5rem;
+    align-self: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    max-height: 100%;
+}
+#trin-form > header {
+    display: flex;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--trin-heavy-tint);
+    justify-content: space-around;
+}
+.trin-close-btn:hover {
+    background-color: var(--trin-light-tint);
+}
+.trin-close-btn:active {
+    background-color: var(--trin-medium-tint);
+}
+.trin-close-btn {
+    font-size: 1.5rem;
+    width: 2.5rem;
+    border-top-right-radius: 0.5rem;
+    align-self: stretch;
+    flex-grow: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+    user-select: none;
+}
+.trin-close-btn::before {
+    content: "×";
+    transform: rotate(90deg);
+}
+#trin-form > header > .trin-heading {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+}
+.trin-form-body {
+    padding: 0 2rem;
+    overflow-y: auto;
+}
+.trin-input-pair {
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: baseline;
+}
+.trin-input-pair > label {
+    flex-grow: 0;
+    padding: 0.3rem 0.6rem;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    color: var(--trin-text-color);
+    margin-right: 1rem;
+}
+.trin-input-pair > select {
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: var(--trin-bg-color);
+    padding: 0.3em 0.6em;
+}
+#trin-form > button[type="submit"] {
+    margin: 0.25rem 0 0.5rem 0;
+    align-self: center;
+    padding: 0.2rem 1rem;
+    font-size: 1rem;
+}
+#trin-overlay {
+    position: fixed;
+    z-index: 1990;
+    width: 100%;
+    height: 100%;
+}
+#trin-root:not(.disabled) > #trin-overlay {
+    background-color: hsla(0, 0%, 10%, 0.8);
+    pointer-events: auto;
+}
+
+#trin-main-button {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 4rem;
+    height: 4rem;
+    font-size: 2.5rem;
+    color: var(--trin-text-color);
+    background-color: var(--trin-hov-bg-color);
+    border-radius: 2rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    z-index: 3000;
+}
+#trin-main-button:hover {
+    filter: brightness(1.1);
+}
+#trin-main-button:active {
+    filter: brightness(1.2);
 }
