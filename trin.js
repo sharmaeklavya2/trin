@@ -47,7 +47,23 @@ export function getScriptAndOffset(codePoint) {
     }
 }
 
-export function trinWord(text, srcScript, targetScript, enhanced=true) {
+class WordTransformer {
+    constructor(name, description) {
+        this.name = name;
+        this.description = description;
+    }
+}
+
+const TRNS_LIST = [
+    new WordTransformer('kan2devAddA',
+        'If source word is in Kannada and ends with a consonant, and target script is Devanagari, append an आ.'),
+    new WordTransformer('dev2kanAddVir',
+        'If source word is in Devanagari and ends with a consonant, and target script is Kannada, append a virama.'),
+];
+
+const TRNS = [];
+
+export function trinWord(text, srcScript, targetScript, enhanced=true, trnsSet=null) {
     // assumes all characters in text are in srcScript. Converts to targetScript.
     if(srcScript === null || srcScript === targetScript) {
         return text;
@@ -58,10 +74,24 @@ export function trinWord(text, srcScript, targetScript, enhanced=true) {
         const oldCodePoint = text.codePointAt(i);
         newCodePoints[i] = oldCodePoint - srcScript.startPos + targetScript.startPos;
     }
-    if(enhanced && srcScript === SCRIPTS.kannada && targetScript === SCRIPTS.devanagari) {
+    if(enhanced) {
         const lastOffset = newCodePoints[n-1] - targetScript.startPos;
-        if(lastOffset >= 0x0015 && lastOffset <= 0x0039) {
-            newCodePoints.push(targetScript.startPos + 0x003e);
+        const isConsonant = lastOffset >= 0x0015 && lastOffset <= 0x0039;
+        if(srcScript === SCRIPTS.kannada && targetScript === SCRIPTS.devanagari) {
+            if(isConsonant) {
+                newCodePoints.push(targetScript.startPos + 0x003e);
+                if(trnsSet !== null) {
+                    trnsSet.add(TRNS.kan2devAddA);
+                }
+            }
+        }
+        else if(srcScript === SCRIPTS.devanagari && targetScript === SCRIPTS.kannada) {
+            if(isConsonant) {
+                newCodePoints.push(targetScript.startPos + 0x004d);
+                if(trnsSet !== null) {
+                    trnsSet.add(TRNS.dev2kanAddVir);
+                }
+            }
         }
     }
     return String.fromCodePoint(...newCodePoints);
@@ -86,10 +116,10 @@ export function forEachWord(text, f) {
     f(text.slice(prevI), prevScript);
 }
 
-export function trin(text, targetScript, enhanced=true) {
+export function trin(text, targetScript, enhanced=true, trnsSet=null) {
     const frags = [];
     function f(word, srcScript) {
-        const newWord = trinWord(word, srcScript, targetScript, enhanced);
+        const newWord = trinWord(word, srcScript, targetScript, enhanced, trnsSet);
         frags.push(newWord);
     }
     forEachWord(text, f);
@@ -173,6 +203,9 @@ function init() {
     for(const script of SCRIPTS_LIST) {
         SCRIPTS[script.name] = script;
         startToScript.set(script.startPos, script);
+    }
+    for(const trn of TRNS_LIST) {
+        TRNS[trn.name] = trn;
     }
     console.log(`trin loaded.`);
 }

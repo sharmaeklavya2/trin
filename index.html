@@ -8,10 +8,12 @@
 <link rel="icon" type="image/png" href="icons/32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="icons/256.png" sizes="256x256" />
 <link rel="stylesheet" href="https://sharmaeklavya2.github.io/funcToForm/funcToForm.css" />
+<!--<link rel="stylesheet" href="http://localhost:8080/websites/funcToForm/funcToForm.css" />-->
 <style>
 input[type="text"], .f2f-ostream {font-size: 1.6em;}
+#trns-output > li {white-space: pre-wrap; font-family: monospace;}
+#trns-label.hidden {display: none;}
 </style>
-<!--<link rel="stylesheet" href="http://localhost:8080/websites/funcToForm/funcToForm.css" />-->
 <script type="text/javascript" src="https://sharmaeklavya2.github.io/funcToForm/funcToForm.js"></script>
 <!--<script type="text/javascript" src="http://localhost:8080/websites/funcToForm/funcToForm.js"></script>-->
 <script type="module" src="trin.js"></script>
@@ -26,8 +28,25 @@ window.addEventListener('DOMContentLoaded', function() {
     const paramBasic = new Param('basicMode', new CheckBoxWidget(),
         'basic mode', 'Disable word-level heuristics. Use character-level replacement only.');
     const paramGroup = new ParamGroup('myForm', [paramText, paramTo, paramBasic]);
+    const trnsOutElem = document.getElementById('trns-output');
+    const trnsLabelElem = document.getElementById('trns-label');
     createForm('myApp', paramGroup, function (input, stdout) {
-        stdout.log(trin.trin(input.text, input.target, !input.basicMode));});
+        const trnsSet = new Set();
+        stdout.log(trin.trin(input.text, input.target, !input.basicMode, trnsSet));
+        trnsOutElem.innerHTML = '';
+        if(trnsSet.size > 0) {
+            trnsLabelElem.classList.remove('hidden');
+            for(const trn of trnsSet) {
+                const explanation = `${trn.name}: ${trn.description}`;
+                const liElem = document.createElement('li');
+                liElem.innerHTML = explanation;
+                trnsOutElem.appendChild(liElem);
+            }
+        }
+        else {
+            trnsLabelElem.classList.add('hidden');
+        }
+    });
 });
 </script>
 </head>
@@ -37,7 +56,11 @@ window.addEventListener('DOMContentLoaded', function() {
 <p>Trin is a tool to transliterate among Indian scripts.
 Trin can, to some extent, help you read and write (but not necessarily understand)
 text written in an Indian script if you can understand some other Indian script.</p>
+
 <div id="myApp" class="no-trin-scaff"></div>
+<p id="trns-label" class="hidden">Transformations applied:</p>
+<ol id="trns-output"></ol>
+
 <h2>How it works</h2>
 <p>Trin uses the fact that most Indian scripts have a similar phonetic spelling system,
 and are arranged similarly in their Unicode code blocks.
