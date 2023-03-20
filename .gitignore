@@ -3,6 +3,7 @@ __pycache__
 /readme.html
 .env
 .secret
+extensionFiles
 
 # Trash
 *~

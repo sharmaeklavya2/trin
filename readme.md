@@ -5,9 +5,7 @@
 text written in an Indian script if you can understand some other Indian script.
 
 `index.html` offers a simple transliteration UI.
-
-I plan to make a chrome extension that modifies text on pages and shows original text for each word
-when the user hovers on it.
+`trin` can also be used as a browser extension to transliterate pages on the web.
 
 ## How it works
 
