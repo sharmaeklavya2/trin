@@ -6,6 +6,7 @@ body {
     --trin-light-tint: rgba(0,0,0, 0.05);
     --trin-medium-tint: rgba(0,0,0, 0.1);
     --trin-heavy-tint: rgba(0,0,0, 0.2);
+    --trin-vheavy-tint: rgba(0,0,0, 0.3);
 }
 @media (prefers-color-scheme: dark) {
     body {
@@ -16,6 +17,7 @@ body {
         --trin-light-tint: rgba(255,255,255, 0.05);
         --trin-medium-tint: rgba(255,255,255, 0.1);
         --trin-heavy-tint: rgba(255,255,255, 0.2);
+        --trin-vheavy-tint: rgba(255,255,255, 0.3);
     }
 }
 
@@ -100,6 +102,7 @@ body {
 }
 .trin-close-btn::before {
     content: "×";
+    color: var(--trin-text-color);
     transform: rotate(90deg);
 }
 #trin-form > header > .trin-heading {
@@ -107,6 +110,7 @@ body {
     padding: 0.5rem 1rem;
     display: flex;
     flex-grow: 1;
+    color: var(--trin-text-color);
     justify-content: space-around;
 }
 .trin-form-body {
@@ -131,7 +135,7 @@ body {
     border: none;
     border-radius: 0.25rem;
     font-size: 1rem;
-    color: var(--text-color);
+    color: var(--trin-text-color);
     background-color: var(--trin-bg-color);
     padding: 0.3em 0.6em;
 }
@@ -139,7 +143,19 @@ body {
     margin: 0.25rem 0 0.5rem 0;
     align-self: center;
     padding: 0.2rem 1rem;
+    color: var(--trin-text-color);
+    background-color: var(--trin-medium-tint);
+    border-radius: 0.2rem;
+    border: 1px solid var(--trin-heavy-tint);
     font-size: 1rem;
+    cursor: pointer;
+    user-select: none;
+}
+#trin-form > button[type="submit"]:hover {
+    background-color: var(--trin-heavy-tint);
+}
+#trin-form > button[type="submit"]:active {
+    background-color: var(--trin-vheavy-tint);
 }
 #trin-overlay {
     position: fixed;
