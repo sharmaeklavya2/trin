@@ -97,10 +97,10 @@ export function trin(text, targetScript, enhanced=true) {
 }
 
 export function detectScripts(text) {
-    let scripts = [];
+    let scripts = new Set();
     function f(word, script) {
         if(script !== null) {
-            scripts.push(script);
+            scripts.add(script);
         }
     }
     forEachWord(text, f);

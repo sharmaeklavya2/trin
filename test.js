@@ -62,10 +62,10 @@ export function addTests(rows, enhanced=true) {
         }
         const fromText = row[0], toText = row[1];
         const toScripts = detectScripts(toText);
-        if(toScripts.length !== 1) {
-            displayError(`Answer ${i} has ${toScripts.length} scripts.`);
+        if(toScripts.size !== 1) {
+            displayError(`Answer ${i} has ${toScripts.size} scripts.`);
         }
-        const trinOut = trin(fromText, toScripts[0], enhanced);
+        const trinOut = trin(fromText, Array.from(toScripts)[0], enhanced);
         displayTestResult(fromText, toText, trinOut, testsElem);
     }
 }
