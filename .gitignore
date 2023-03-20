@@ -1,4 +1,5 @@
 *.pyc
+*.zip
 __pycache__
 /readme.html
 .env
