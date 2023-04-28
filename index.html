@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://sharmaeklavya2.github.io/funcToForm/funcToForm.css" />
 <!--<link rel="stylesheet" href="http://localhost:8080/websites/funcToForm/funcToForm.css" />-->
 <style>
-input[type="text"], .f2f-ostream {font-size: 1.6em;}
+textarea, .f2f-ostream {font-size: 1.6em;}
 #trns-output > li {white-space: pre-wrap; font-family: monospace;}
 #trns-label.hidden {display: none;}
 </style>
@@ -22,7 +22,7 @@ input[type="text"], .f2f-ostream {font-size: 1.6em;}
 import * as trin from './trin.js';
 window.trin = trin;
 window.addEventListener('DOMContentLoaded', function() {
-    const paramText = new Param('text', new TextWidget(null, false, '', ''), 'text');
+    const paramText = new Param('text', new TextWidget(null, false, '', '', 'textarea'), 'text');
     const scriptOptions = trin.SCRIPTS_LIST.map(script => new SelectOption(script.name, script));
     const paramTo = new Param('target', new SelectWidget(scriptOptions));
     const paramBasic = new Param('basicMode', new CheckBoxWidget(),
