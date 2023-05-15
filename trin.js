@@ -150,7 +150,7 @@ export function buildScaffolding(elem) {
                         let newChild = null;
                         if(script !== null) {
                             newChild = document.createElement('span');
-                            newChild.innerHTML = word;
+                            newChild.innerText = word;
                             newChild.classList.add('trin-scaff-elem');
                             newChild.setAttribute('data-orig-text', word);
                             newChild.setAttribute('tabindex', '0');
@@ -182,12 +182,12 @@ export function trinElem(elem, docScript=null, hovScript=null, enhanced=true) {
         hovScript = origScript;
     }
     const docWord = trinWord(origWord, origScript, docScript, enhanced);
-    elem.innerHTML = docWord;
+    elem.innerText = docWord;
     if(hovScript !== docScript) {
         const hovWord = trinWord(origWord, origScript, hovScript, enhanced);
         const hovElem = document.createElement('span');
         hovElem.classList.add('trin-hover');
-        hovElem.innerHTML = hovWord;
+        hovElem.innerText = hovWord;
         elem.appendChild(hovElem);
     }
 }
@@ -246,7 +246,7 @@ const trinRootContents = `
 function addOptionElem(selectElem, value, label) {
     const elem = document.createElement('option');
     elem.setAttribute('value', value);
-    elem.innerHTML = label;
+    elem.innerText = label;
     selectElem.appendChild(elem);
 }
 
@@ -263,7 +263,7 @@ export function initUI() {
 
     const trinButton = document.createElement('div');
     trinButton.setAttribute('id', 'trin-main-button');
-    trinButton.innerHTML = '\u091f\u094d\u0930';
+    trinButton.innerText = '\u091f\u094d\u0930';
     document.body.appendChild(trinButton);
     trinButton.addEventListener('click', toggleTrinRoot);
     document.getElementById('trin-form-close-btn').addEventListener('click', toggleTrinRoot);
