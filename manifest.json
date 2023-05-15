@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Trin",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Transliterate among Indian scripts",
     "icons": {
         "32": "icons/32.png",
@@ -15,5 +15,8 @@
     "web_accessible_resources": [{
         "resources": ["trin.js"],
         "matches": ["<all_urls>"]
-    }]
+    }],
+    "browser_specific_settings": {
+        "gecko": {"id": "trin@ekujupr.me"}
+    }
 }
