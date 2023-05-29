@@ -226,11 +226,11 @@ const trinRootContents = `
         <div class="trin-close-btn" id="trin-form-close-btn"></div>
     </header>
     <div class="trin-form-body">
-        <div class="trin-input-pair">
+        <div class="trin-input-pair space-between">
             <label for="trin-doc-input">Target script</label>
             <select id="trin-doc-input" name="trinDocScript"></select>
         </div>
-        <div class="trin-input-pair">
+        <div class="trin-input-pair space-between">
             <label for="trin-hov-input">Hover script</label>
             <select id="trin-hov-input" name="trinHovScript"></select>
         </div>

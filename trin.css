@@ -139,6 +139,9 @@ body {
     background-color: var(--trin-bg-color);
     padding: 0.3em 0.6em;
 }
+.trin-input-pair.space-between {
+    justify-content: space-between;
+}
 #trin-form > button[type="submit"] {
     margin: 0.25rem 0 0.5rem 0;
     align-self: center;
