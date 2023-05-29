@@ -263,6 +263,7 @@ export function initUI() {
 
     const trinButton = document.createElement('div');
     trinButton.setAttribute('id', 'trin-main-button');
+    trinButton.classList.add('no-trin-scaff');
     trinButton.innerText = '\u091f\u094d\u0930';
     document.body.appendChild(trinButton);
     trinButton.addEventListener('click', toggleTrinRoot);
