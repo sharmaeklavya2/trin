@@ -215,6 +215,7 @@ init();
 //=[ UI ]=======================================================================
 
 let trinRoot = null;
+export let lastRawTrinOptions = null;
 
 const trinRootContents = `
 <div class="trin-gas"></div>
@@ -250,7 +251,48 @@ function addOptionElem(selectElem, value, label) {
     selectElem.appendChild(elem);
 }
 
-export function initUI() {
+function processOptions(d) {
+    const docScript = (d.docScript === 'preserve') ? null : SCRIPTS[d.docScript];
+    const hovScript = (d.hovScript === 'preserve') ? null : SCRIPTS[d.hovScript];
+    return {'docScript': docScript, 'hovScript': hovScript, 'enhanced': !d.basicMode};
+}
+
+function storeUIOptions(storage, storageType) {
+    if(storageType === null) {}
+    else if(storageType === 'web') {
+        storage.setItem('trinUIOptions', JSON.stringify(lastRawTrinOptions));
+    }
+    else {
+        throw new Error(`writing to storageType '${storageType}' is not supported.`);
+    }
+}
+
+function materializeUIOptions(d) {
+    for(const scriptType of ['doc', 'hov']) {
+        const scriptSelectElem = document.getElementById(`trin-${scriptType}-input`);
+        scriptSelectElem.value = d[scriptType + 'Script'];
+    }
+    const basicElem = document.getElementById('trin-basic-input');
+    basicElem.checked = d.basicMode;
+}
+
+function loadUIOptions(storage, storageType) {
+    if(lastRawTrinOptions === null) {
+        if(storageType === null) {}
+        else if(storageType === 'web') {
+            const storageOutput = storage.getItem('trinUIOptions');
+            if(storageOutput !== null) {
+                const trinOptions = JSON.parse(storageOutput);
+                materializeUIOptions(trinOptions);
+            }
+        }
+        else {
+            throw new Error(`reading from storageType '${storageType}' is not supported.`);
+        }
+    }
+}
+
+export function initUI(storage=null, storageType=null) {
     trinRoot = document.createElement('div');
     trinRoot.setAttribute('id', 'trin-root');
     trinRoot.classList.add('disabled');
@@ -286,18 +328,22 @@ export function initUI() {
         ev.preventDefault();
         const formData = new FormData(trinForm);
         const docScriptName = formData.get('trinDocScript');
-        const docScript = (docScriptName === 'preserve') ? null : SCRIPTS[docScriptName];
         const hovScriptName = formData.get('trinHovScript');
-        const hovScript = (hovScriptName === 'preserve') ? null : SCRIPTS[hovScriptName];
         const basicMode = formData.has('trinBasicMode');
+        lastRawTrinOptions = {'docScript': docScriptName, 'hovScript': hovScriptName, 'basicMode': basicMode};
+        const trinOptions = processOptions(lastRawTrinOptions);
         buildScaffolding(document.body);
-        trinAllElems(docScript, hovScript, !basicMode);
+        trinAllElems(trinOptions.docScript, trinOptions.hovScript, trinOptions.enhanced);
         hideTrinRoot();
+        storeUIOptions(storage, storageType);
     }
+
     trinForm.addEventListener('submit', trinSubmitEventHandler);
     window.addEventListener('keydown', function(ev) {
         if(!ev.defaultPrevented && ev.altKey && ev.code === 'KeyT') {
             trinSubmitEventHandler(ev);
         }
     });
+
+    loadUIOptions(storage, storageType);
 }
