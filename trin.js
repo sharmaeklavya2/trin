@@ -238,7 +238,7 @@ const trinRootContents = `
             <input type="checkbox" id="trin-basic-input" name="trinBasicMode"/>
         </div>
     </div>
-    <button type="submit" id="trin-submit">Transliterate</button>
+    <button type="submit" id="trin-submit">Transliterate (<kbd>Alt</kbd>+<kbd>t</kbd>)</button>
 </form>
 <div class="trin-gas"></div>
 `;
@@ -260,6 +260,9 @@ export function initUI() {
     function toggleTrinRoot(ev) {
         trinRoot.classList.toggle('disabled');
     }
+    function hideTrinRoot(ev) {
+        trinRoot.classList.add('disabled');
+    }
 
     const trinButton = document.createElement('div');
     trinButton.setAttribute('id', 'trin-main-button');
@@ -279,7 +282,7 @@ export function initUI() {
     }
 
     const trinForm = document.getElementById('trin-form');
-    trinForm.addEventListener('submit', function (ev) {
+    function trinSubmitEventHandler(ev) {
         ev.preventDefault();
         const formData = new FormData(trinForm);
         const docScriptName = formData.get('trinDocScript');
@@ -289,6 +292,12 @@ export function initUI() {
         const basicMode = formData.has('trinBasicMode');
         buildScaffolding(document.body);
         trinAllElems(docScript, hovScript, !basicMode);
-        toggleTrinRoot();
+        hideTrinRoot();
+    }
+    trinForm.addEventListener('submit', trinSubmitEventHandler);
+    window.addEventListener('keydown', function(ev) {
+        if(!ev.defaultPrevented && ev.altKey && ev.code === 'KeyT') {
+            trinSubmitEventHandler(ev);
+        }
     });
 }
