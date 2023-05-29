@@ -20,12 +20,11 @@ function importAndInitUI() {
         const foundScripts = trin.detectScripts(document.body.innerText);
         if(foundScripts.size > 0) {
             console.log('trin detected ', Array.from(foundScripts).map((script) => script.name).join(', '));
-            trin.initUI();
         }
         else {
             console.log("trin didn't find any Indian scripts.");
-            trin.initUI();
         }
+        trin.initUI(chrome.storage.local, 'extension');
     });
 }
 
