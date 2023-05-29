@@ -218,7 +218,6 @@ let trinRoot = null;
 export let lastRawTrinOptions = null;
 
 const trinRootContents = `
-<div class="trin-gas"></div>
 <div id="trin-overlay"></div>
 <form id="trin-form">
     <header>
@@ -241,7 +240,6 @@ const trinRootContents = `
     </div>
     <button type="submit" id="trin-submit">Transliterate (<kbd>Alt</kbd>+<kbd>t</kbd>)</button>
 </form>
-<div class="trin-gas"></div>
 `;
 
 function addOptionElem(selectElem, value, label) {
