@@ -24,6 +24,7 @@ function importAndInitUI() {
         }
         else {
             console.log("trin didn't find any Indian scripts.");
+            trin.initUI();
         }
     });
 }
