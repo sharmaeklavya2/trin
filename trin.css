@@ -2,6 +2,7 @@ body {
     --trin-bg-color: white;
     --trin-text-color: #202020;
     --trin-hov-bg-color: #c0c0c0;
+    --trin-menu-color: #d0d0d0;
     --trin-large-shadow: 0 4px 8px rgba(0,0,0,0.4), 0 4px 12px 4px rgba(0,0,0,0.2);
     --trin-light-tint: rgba(0,0,0, 0.05);
     --trin-medium-tint: rgba(0,0,0, 0.1);
@@ -12,8 +13,9 @@ body {
     body {
         --trin-bg-color: #1b1e20;
         --trin-text-color: #c8c8c8;
-        --trin-hov-bg-color: #404040;
-        --trin-large-shadow; 0 4px 8px rgba(255,255,255,0.4), 0 4px 12px 4px rgba(255,255,255,0.2);
+        --trin-hov-bg-color: #303030;
+        --trin-menu-color: #282828;
+        --trin-large-shadow: 0 4px 8px rgba(255,255,255,0.2), 0 4px 12px 4px rgba(255,255,255,0.1);
         --trin-light-tint: rgba(255,255,255, 0.05);
         --trin-medium-tint: rgba(255,255,255, 0.1);
         --trin-heavy-tint: rgba(255,255,255, 0.2);
@@ -63,7 +65,7 @@ body {
     z-index: 2010;
     pointer-events: auto;
     box-shadow: var(--trin-large-shadow);
-    background-color: var(--trin-hov-bg-color);
+    background-color: var(--trin-menu-color);
     border-radius: 0.5rem;
     align-self: center;
     margin: 0;
@@ -125,7 +127,7 @@ body {
     border-radius: 0.25rem;
     font-size: 1rem;
     color: var(--trin-text-color);
-    margin-right: 1rem;
+    margin: 0 1rem 0 0;
 }
 .trin-input-pair > select {
     border: none;
@@ -139,13 +141,13 @@ body {
     justify-content: space-between;
 }
 #trin-form > button[type="submit"] {
-    margin: 0.25rem 0 0.5rem 0;
+    margin: 0.25rem 0 0.75rem 0;
     align-self: center;
     padding: 0.2rem 1rem;
     color: var(--trin-text-color);
     background-color: var(--trin-medium-tint);
     border-radius: 0.2rem;
-    border: 1px solid var(--trin-heavy-tint);
+    border: none;
     font-size: 1rem;
     cursor: pointer;
     user-select: none;
