@@ -289,7 +289,6 @@ function loadUIOptions(storage, storageType) {
         }
         else if(storageType === 'extension') {
             storage.get('trinUIOptions').then((storageOutput) => {
-                console.debug('storage output:', storageOutput);
                 const uiOptionsStr = storageOutput.trinUIOptions;
                 if(lastRawTrinOptions === null && uiOptionsStr) {
                     const uiOptions = JSON.parse(uiOptionsStr);
