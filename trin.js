@@ -219,7 +219,7 @@ let trinRoot = null;
 const trinRootContents = `
 <div class="trin-gas"></div>
 <div id="trin-overlay"></div>
-<form id="trin-form" action="javascript:void(0);">
+<form id="trin-form">
     <header>
         <div class="trin-heading">Trin</div>
         <div class="trin-close-btn" id="trin-form-close-btn"></div>
@@ -280,6 +280,7 @@ export function initUI() {
 
     const trinForm = document.getElementById('trin-form');
     trinForm.addEventListener('submit', function (ev) {
+        ev.preventDefault();
         const formData = new FormData(trinForm);
         const docScriptName = formData.get('trinDocScript');
         const docScript = (docScriptName === 'preserve') ? null : SCRIPTS[docScriptName];
