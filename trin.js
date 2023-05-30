@@ -234,7 +234,7 @@ const trinRootContents = `
             <select id="trin-hov-input" name="trinHovScript"></select>
         </div>
         <div class="trin-input-pair">
-            <label for="trin-basic-input">Basic mode</label>
+            <label for="trin-basic-input" title="Basic mode disables word-level heuristics. It uses character-level replacement only.">Basic mode</label>
             <input type="checkbox" id="trin-basic-input" name="trinBasicMode"/>
         </div>
     </div>
