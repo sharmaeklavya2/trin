@@ -302,7 +302,7 @@ function loadUIOptions(storage, storageType) {
     }
 }
 
-export function initUI(storage=null, storageType=null) {
+export function loadUI(storage=null, storageType=null) {
     trinRoot = document.createElement('div');
     trinRoot.setAttribute('id', 'trin-root');
     trinRoot.classList.add('disabled');
@@ -357,3 +357,20 @@ export function initUI(storage=null, storageType=null) {
 
     loadUIOptions(storage, storageType);
 }
+
+function initUI() {
+    if(typeof window !== 'undefined' && window && import.meta && import.meta.url) {
+        const qparams = new URL(import.meta.url).searchParams;
+        const uiParam = qparams.get('ui');
+        if(uiParam === '1' || uiParam === 'true') {
+            if(document.readyState !== 'loading') {
+                loadUI(window.localStorage, 'web');
+            }
+            else {
+                window.addEventListener('DOMContentLoaded', () => {loadUI(window.localStorabe, 'web');});
+            }
+        }
+    }
+}
+
+initUI();
