@@ -358,11 +358,24 @@ export function loadUI(storage=null, storageType=null) {
     loadUIOptions(storage, storageType);
 }
 
+function isTrueString(s) {
+    return s === '1' || s === 'true';
+}
+
 function initUI() {
     if(typeof window !== 'undefined' && window && import.meta && import.meta.url) {
         const qparams = new URL(import.meta.url).searchParams;
         const uiParam = qparams.get('ui');
-        if(uiParam === '1' || uiParam === 'true') {
+        const addCssParam = qparams.get('addCss') || qparams.get('addCSS');
+        if(isTrueString(addCssParam) && import.meta.resolve) {
+            const head = document.getElementsByTagName('head')[0];
+            const cssPath = import.meta.resolve('./trin.css');
+            const linkElem = document.createElement('link');
+            linkElem.href = cssPath;
+            linkElem.rel = 'stylesheet';
+            head.appendChild(linkElem);
+        }
+        if(isTrueString(uiParam)) {
             if(document.readyState !== 'loading') {
                 loadUI(window.localStorage, 'web');
             }
