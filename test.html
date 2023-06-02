@@ -7,14 +7,15 @@
 <title>Trin Tests</title>
 <!--<link rel="icon" type="image/png" href="icons/32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="icons/256.png" sizes="256x256" />-->
-<script type="module" src="trin.js"></script>
+<link rel="stylesheet" href="test.css" />
+<link rel="prefetch" href="trin.js" />
 <script src="https://unpkg.com/papaparse@5.4.0/papaparse.min.js"></script>
 <script type="module" src="test.js"></script>
 <script type="module">
 import * as trinTest from './test.js';
 window.trinTest = trinTest;
+window.trin = trinTest.trin;
 </script>
-<link rel="stylesheet" href="test.css" />
 </head>
 <body class="no-trin-scaff">
 <h1>Trin Tests</h1>

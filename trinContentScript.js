@@ -1,10 +1,10 @@
 function isAlreadyLoaded() {
-    if(window.hasOwnProperty('trin')) {
+    if(window.hasOwnProperty('trinUI')) {
         return true;
     }
     const jscripts = document.getElementsByTagName('script');
     for(const jscript of jscripts) {
-        if(jscript.id === 'trinScript' || jscript.src.includes('trin.js')) {
+        if(jscript.id === 'trinScript' || jscript.src.includes('trinUI.js')) {
             return true;
         }
     }
@@ -12,17 +12,18 @@ function isAlreadyLoaded() {
 }
 
 function importAndInitUI() {
-    const trinPath = chrome.runtime.getURL("trin.js");
-    import(trinPath).then((trin) => {
-        window.trin = trin;
-        const foundScripts = trin.detectScripts(document.body.innerText);
+    const trinPath = chrome.runtime.getURL("trinUI.js");
+    import(trinPath).then((trinUI) => {
+        window.trinUI = trinUI;
+        window.trin = trinUI.trin;
+        const foundScripts = trinUI.trin.detectScripts(document.body.innerText);
         if(foundScripts.size > 0) {
             console.log('trin detected', Array.from(foundScripts).map((script) => script.name).join(', '));
         }
         else {
             console.log("trin didn't find any Indian scripts.");
         }
-        trin.loadUI(chrome.storage.local, 'extension');
+        trinUI.loadUI(chrome.storage.local, 'extension');
     });
 }
 

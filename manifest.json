@@ -14,7 +14,7 @@
         "matches": ["<all_urls>"]
     }],
     "web_accessible_resources": [{
-        "resources": ["trin.js"],
+        "resources": ["trin.js", "trinUI.js"],
         "matches": ["<all_urls>"]
     }]
 }

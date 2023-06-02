@@ -1,6 +1,8 @@
 'use strict';
 import {trin, detectScripts} from './trin.js';
 
+export * as trin from './trin.js';
+
 let innerErrorsElem = null;
 
 function getErrorsElem() {
