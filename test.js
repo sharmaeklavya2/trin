@@ -72,37 +72,38 @@ export function addTests(rows, enhanced=true) {
     }
 }
 
-let callbacksReceived = 0;
-let csvRows = null;
+export let csvRows = null;
 
-export function getCsvRows() {
-    return csvRows;
+function init() {
+    let callbacksReceived = 0;
+
+    Papa.parse("tests.csv", {
+        "download": true,
+        "error": function errHandle(error) {
+            displayError('CSV parse error: ' + error);
+        },
+        "complete": function f(response) {
+            if(response.errors.length > 0) {
+                for(const error in response.errors) {
+                    displayError('CSV parse error: ' + error.message);
+                }
+            }
+            else {
+                callbacksReceived += 1;
+                csvRows = response.data;
+                if(callbacksReceived === 2) {
+                    addTests(csvRows);
+                }
+            }
+        }
+    });
+
+    window.addEventListener('DOMContentLoaded', function() {
+        callbacksReceived += 1;
+        if(callbacksReceived === 2) {
+            addTests(csvRows);
+        }
+    });
 }
 
-Papa.parse("tests.csv", {
-    "download": true,
-    "error": function errHandle(error) {
-        displayError('CSV parse error: ' + error);
-    },
-    "complete": function f(response) {
-        if(response.errors.length > 0) {
-            for(const error in response.errors) {
-                displayError('CSV parse error: ' + error.message);
-            }
-        }
-        else {
-            callbacksReceived += 1;
-            csvRows = response.data;
-            if(callbacksReceived === 2) {
-                addTests(csvRows);
-            }
-        }
-    }
-});
-
-window.addEventListener('DOMContentLoaded', function() {
-    callbacksReceived += 1;
-    if(callbacksReceived === 2) {
-        addTests(csvRows);
-    }
-});
+init();
