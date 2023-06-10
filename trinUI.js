@@ -205,7 +205,12 @@ export function loadUI(storage=null, storageType=null) {
     trinForm.addEventListener('submit', trinSubmitEventHandler);
     window.addEventListener('keydown', function(ev) {
         if(!ev.defaultPrevented && ev.altKey && ev.code === 'KeyT') {
-            trinSubmitEventHandler(ev);
+            if(ev.shiftKey) {
+                toggleTrinRoot(ev);
+            }
+            else {
+                trinSubmitEventHandler(ev);
+            }
         }
     });
 
