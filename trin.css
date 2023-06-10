@@ -179,6 +179,7 @@ body {
     font-size: 2.5rem;
     color: var(--trin-text-color);
     background-color: var(--trin-hov-bg-color);
+    box-shadow: var(--trin-large-shadow);
     border-radius: 2rem;
     display: flex;
     align-items: baseline;
