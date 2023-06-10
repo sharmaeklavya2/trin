@@ -174,7 +174,7 @@ export function loadUI(storage=null, storageType=null) {
     trinButton.setAttribute('id', 'trin-main-button');
     trinButton.classList.add('no-trin-scaff');
     trinButton.innerText = '\u091f\u094d\u0930';
-    document.body.appendChild(trinButton);
+    trinRoot.appendChild(trinButton);
     trinButton.addEventListener('click', toggleTrinRoot);
     document.getElementById('trin-form-close-btn').addEventListener('click', toggleTrinRoot);
     document.getElementById('trin-overlay').addEventListener('click', toggleTrinRoot);

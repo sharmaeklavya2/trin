@@ -59,9 +59,6 @@ body {
     justify-content: space-around;
     color-scheme: light dark;
 }
-#trin-root.disabled {
-    display: none;
-}
 #trin-form {
     z-index: 2010;
     pointer-events: auto;
@@ -153,6 +150,9 @@ body {
     cursor: pointer;
     user-select: none;
 }
+#trin-root.disabled > #trin-form {
+    display: none;
+}
 #trin-form > button[type="submit"]:hover {
     background-color: var(--trin-heavy-tint);
 }
@@ -171,6 +171,7 @@ body {
 }
 
 #trin-main-button {
+    pointer-events: auto;
     position: fixed;
     bottom: 0;
     right: 0;
