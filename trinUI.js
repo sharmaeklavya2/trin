@@ -39,6 +39,19 @@ export function buildScaffolding(elem) {
     return count;
 }
 
+export function getGoogleTranslateLink(word, fromLang, toLang) {
+    return `https://translate.google.com/?sl=${fromLang}&tl=${toLang}&text=${word}`;
+}
+
+function firstInNeq(x, a) {
+    for(const y of a) {
+        if(y !== x) {
+            return y;
+        }
+    }
+    return x;
+}
+
 export function trinElem(elem, docScript=null, hovScript=null, enhanced=true) {
     const origWord = elem.dataset.origText;
     const [origScript] = getScriptAndOffset(origWord.codePointAt(0));
@@ -54,7 +67,20 @@ export function trinElem(elem, docScript=null, hovScript=null, enhanced=true) {
         const hovWord = trinWord(origWord, origScript, hovScript, enhanced);
         const hovElem = document.createElement('span');
         hovElem.classList.add('trin-hover');
-        hovElem.innerText = hovWord;
+
+        const trnElem = document.createElement('span');
+        trnElem.classList.add('trin-hover-trn');
+        trnElem.innerText = hovWord;
+        hovElem.appendChild(trnElem);
+
+        const gLinkElem = document.createElement('a');
+        gLinkElem.setAttribute('href', getGoogleTranslateLink(origWord, origScript.langCode,
+            firstInNeq(origScript, [hovScript, docScript]).langCode));
+        gLinkElem.setAttribute('target', '_blank');
+        gLinkElem.innerText = 'G';
+        gLinkElem.classList.add('trin-gtrn-link');
+        hovElem.appendChild(gLinkElem);
+
         elem.appendChild(hovElem);
     }
 }
@@ -90,6 +116,10 @@ const trinRootContents = `
         <div class="trin-input-pair">
             <label for="trin-basic-input" title="Basic mode disables word-level heuristics. It uses character-level replacement only.">Basic mode</label>
             <input type="checkbox" id="trin-basic-input" name="trinBasicMode"/>
+        </div>
+        <div class="trin-input-pair">
+            <label for="trin-gtrn-input">Show google translate link</label>
+            <input type="checkbox" id="trin-gtrn-input" name="trinShowGtrn"/>
         </div>
     </div>
     <button type="submit" id="trin-submit">Transliterate (<kbd>Alt</kbd>+<kbd>t</kbd>)</button>
@@ -129,6 +159,8 @@ function materializeUIOptions(d) {
     }
     const basicElem = document.getElementById('trin-basic-input');
     basicElem.checked = d.basicMode;
+    const showGtrnElem = document.getElementById('trin-gtrn-input');
+    showGtrnElem.checked = d.showGtrn;
 }
 
 function loadUIOptions(storage, storageType) {
@@ -194,10 +226,18 @@ export function loadUI(storage=null, storageType=null) {
         const docScriptName = formData.get('trinDocScript');
         const hovScriptName = formData.get('trinHovScript');
         const basicMode = formData.has('trinBasicMode');
-        lastRawTrinOptions = {'docScript': docScriptName, 'hovScript': hovScriptName, 'basicMode': basicMode};
+        const showGtrn = formData.has('trinShowGtrn');
+        lastRawTrinOptions = {'docScript': docScriptName, 'hovScript': hovScriptName,
+            'basicMode': basicMode, 'showGtrn': showGtrn};
         const trinOptions = processOptions(lastRawTrinOptions);
         buildScaffolding(document.body);
         trinAllElems(trinOptions.docScript, trinOptions.hovScript, trinOptions.enhanced);
+        if(showGtrn) {
+            document.body.classList.add('trin-show-gtrn');
+        }
+        else {
+            document.body.classList.remove('trin-show-gtrn');
+        }
         hideTrinRoot();
         storeUIOptions(storage, storageType);
     }

@@ -44,6 +44,17 @@ body {
     padding: 0.2em 0.3em;
     white-space: nowrap;
 }
+.trin-gtrn-link {
+    display: none;
+    font-size: 90%;
+    margin-left: 0.5em;
+}
+.trin-gtrn-link:not(:hover) {
+    text-decoration: none;
+}
+.trin-show-gtrn .trin-gtrn-link {
+    display: inline;
+}
 
 #trin-root {
     position: fixed;
