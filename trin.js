@@ -3,9 +3,11 @@
 const blockSize = 0x80;
 
 export class Script {
-    constructor(shortName, name, startPos) {
+    constructor(shortName, name, langCode, startPos) {
         this.shortName = shortName;
         this.name = name;
+        this.langCode = langCode;
+        // see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
         this.startPos = startPos;
     }
 
@@ -19,15 +21,15 @@ const devCommonCodePoints = new Set([0x0964, 0x0965, 0x0970]);
 // some devanagari characters, like danda (U+0964), are not treated like devanagari characters here.
 
 export const SCRIPTS_LIST = [
-    new Script('dev', 'devanagari', devStartPoint),
-    new Script('ben', 'bengali', 0x0980),
-    new Script('gur', 'gurmukhi', 0x0A00),
-    new Script('guj', 'gujarati', 0x0A80),
-    new Script('ori', 'oriya', 0x0B00),
-    new Script('tam', 'tamil', 0x0B80),
-    new Script('tel', 'telugu', 0x0C00),
-    new Script('kan', 'kannada', 0x0C80),
-    new Script('mal', 'malayalam', 0x0D00),
+    new Script('dev', 'devanagari', 'hi', devStartPoint),
+    new Script('ben', 'bengali', 'bn', 0x0980),
+    new Script('gur', 'gurmukhi', 'pa', 0x0A00),
+    new Script('guj', 'gujarati', 'gu', 0x0A80),
+    new Script('ori', 'oriya', 'or', 0x0B00),
+    new Script('tam', 'tamil', 'ta', 0x0B80),
+    new Script('tel', 'telugu', 'te', 0x0C00),
+    new Script('kan', 'kannada', 'kn', 0x0C80),
+    new Script('mal', 'malayalam', 'ml', 0x0D00),
 ];
 
 export const SCRIPTS = {}
