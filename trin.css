@@ -87,6 +87,8 @@ body {
     max-height: 100%;
 }
 #trin-form > header {
+    all: revert;
+    font-family: var(--trin-font);
     display: flex;
     flex-shrink: 0;
     border-bottom: 1px solid var(--trin-heavy-tint);
@@ -138,6 +140,8 @@ body {
     align-items: baseline;
 }
 .trin-input-pair > label {
+    all: revert;
+    font-family: var(--trin-font);
     flex-grow: 0;
     padding: 0.3rem 0.6rem;
     border: none;
@@ -147,6 +151,8 @@ body {
     margin: 0 1rem 0 0;
 }
 .trin-input-pair > select {
+    all: revert;
+    font-family: var(--trin-font);
     border: none;
     border-radius: 0.25rem;
     font-size: 1rem;
@@ -158,6 +164,8 @@ body {
     justify-content: space-between;
 }
 #trin-form > button[type="submit"] {
+    all: revert;
+    font-family: var(--trin-font);
     margin: 0.25rem 0 0.75rem 0;
     align-self: center;
     padding: 0.2rem 1rem;
