@@ -112,6 +112,9 @@ body {
     user-select: none;
     text-decoration: none;
 }
+.trin-header-btn:hover {
+    text-decoration: none;
+}
 #trin-form-close-btn::before {
     content: "×";
     color: var(--trin-text-color);
