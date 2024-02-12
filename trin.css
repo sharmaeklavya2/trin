@@ -8,6 +8,7 @@ body {
     --trin-medium-tint: rgba(0,0,0, 0.1);
     --trin-heavy-tint: rgba(0,0,0, 0.2);
     --trin-vheavy-tint: rgba(0,0,0, 0.3);
+    --trin-font: BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Open Sans", "Helvetica Neue", sans-serif;
 }
 @media (prefers-color-scheme: dark) {
     body {
@@ -71,6 +72,8 @@ body {
     color-scheme: light dark;
 }
 #trin-form {
+    all: revert;
+    font-family: var(--trin-font);
     z-index: 2010;
     pointer-events: auto;
     box-shadow: var(--trin-large-shadow);
@@ -187,6 +190,8 @@ body {
 }
 
 #trin-main-button {
+    all: revert;
+    font-family: var(--trin-font);
     pointer-events: auto;
     position: fixed;
     bottom: 0;
