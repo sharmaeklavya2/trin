@@ -89,16 +89,15 @@ body {
     border-bottom: 1px solid var(--trin-heavy-tint);
     justify-content: space-around;
 }
-.trin-close-btn:hover {
+.trin-header-btn:hover {
     background-color: var(--trin-light-tint);
 }
-.trin-close-btn:active {
+.trin-header-btn:active {
     background-color: var(--trin-medium-tint);
 }
-.trin-close-btn {
+.trin-header-btn {
     font-size: 1.5rem;
     width: 2.5rem;
-    border-top-right-radius: 0.5rem;
     align-self: stretch;
     flex-grow: 0;
     display: flex;
@@ -106,11 +105,17 @@ body {
     justify-content: space-around;
     cursor: pointer;
     user-select: none;
+    text-decoration: none;
 }
-.trin-close-btn::before {
+#trin-form-close-btn::before {
     content: "×";
     color: var(--trin-text-color);
     transform: rotate(90deg);
+    border-top-right-radius: 0.5rem;
+}
+#trin-form-help-btn::before {
+    content: "?";
+    color: var(--trin-text-color);
 }
 #trin-form > header > .trin-heading {
     font-size: 1.2rem;

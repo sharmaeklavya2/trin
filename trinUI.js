@@ -102,7 +102,9 @@ const trinRootContents = `
 <form id="trin-form">
     <header>
         <div class="trin-heading">Trin</div>
-        <div class="trin-close-btn" id="trin-form-close-btn"></div>
+        <a href="https://sharmaeklavya2.github.io/trin/" target="_blank" rel="noopener noreferrer"
+            class="trin-header-btn" id="trin-form-help-btn"></a>
+        <div class="trin-header-btn" id="trin-form-close-btn"></div>
     </header>
     <div class="trin-form-body">
         <div class="trin-input-pair space-between">
