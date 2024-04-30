@@ -1,5 +1,3 @@
-.PHONY: extension
-extension:
-	mkdir -p extensionFiles
-	cp manifest.json trin.js trin.css trinContentScript.js extensionFiles
-	cp -r icons extensionFiles
+.PHONY: build
+build:
+	zip -r trin.zip manifest.json trin.css trin.js trinUI.js trinContentScript.js icons
