@@ -1,8 +1,10 @@
 {
     "manifest_version": 3,
     "name": "Trin",
-    "version": "0.1.0",
     "description": "Transliterate among Indian scripts",
+    "version": "0.2.0",
+    "author": "Eklavya Sharma",
+    "homepage_url": "https://sharmaeklavya2.github.io/trin/",
     "icons": {
         "32": "icons/32.png",
         "256": "icons/256.png"
