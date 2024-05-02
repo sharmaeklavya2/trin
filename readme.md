@@ -15,6 +15,7 @@ text written in an Indian script if you can understand some other Indian script.
     You can try the extension (without installing it)
     at [example.html](https://sharmaeklavya2.github.io/trin/example.html).
 
+    Extension for Firefox: <https://addons.mozilla.org/addon/trin/>.
     To install the extension in Chrome, first run `make build` to create a zip file.
     Then visit <chrome://extensions/>, enable developer mode,
     and then drag-and-drop the zip file on that page.
