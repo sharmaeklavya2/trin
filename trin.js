@@ -55,10 +55,10 @@ class WordTransformer {
 }
 
 const TRNS_LIST = [
-    new WordTransformer('kan2devAddA',
-        'If source word is in Kannada and ends with a consonant, and target script is Devanagari, append an आ.'),
-    new WordTransformer('dev2kanAddVir',
-        'If source word is in Devanagari and ends with a consonant, and target script is Kannada, append a virama.'),
+    new WordTransformer('addA',
+        'If source word is in Kannada or Telugu and ends with a consonant, and target script is Devanagari, append an आ.'),
+    new WordTransformer('addVir',
+        'If source word is in Devanagari and ends with a consonant, and target script is Kannada or Telugu, append a virama.'),
 ];
 
 const TRNS = [];
@@ -77,19 +77,19 @@ export function trinWord(text, srcScript, targetScript, enhanced=true, trnsSet=n
     if(enhanced) {
         const lastOffset = newCodePoints[n-1] - targetScript.startPos;
         const isConsonant = lastOffset >= 0x0015 && lastOffset <= 0x0039;
-        if(srcScript === SCRIPTS.kannada && targetScript === SCRIPTS.devanagari) {
+        if((srcScript === SCRIPTS.kannada || srcScript === SCRIPTS.telugu) && targetScript === SCRIPTS.devanagari) {
             if(isConsonant) {
                 newCodePoints.push(targetScript.startPos + 0x003e);
                 if(trnsSet !== null) {
-                    trnsSet.add(TRNS.kan2devAddA);
+                    trnsSet.add(TRNS.addA);
                 }
             }
         }
-        else if(srcScript === SCRIPTS.devanagari && targetScript === SCRIPTS.kannada) {
+        else if(srcScript === SCRIPTS.devanagari && (targetScript === SCRIPTS.kannada || targetScript === SCRIPTS.telugu)) {
             if(isConsonant) {
                 newCodePoints.push(targetScript.startPos + 0x004d);
                 if(trnsSet !== null) {
-                    trnsSet.add(TRNS.dev2kanAddVir);
+                    trnsSet.add(TRNS.addVir);
                 }
             }
         }
