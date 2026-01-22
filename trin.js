@@ -59,6 +59,10 @@ const TRNS_LIST = [
         'If source word is in Kannada or Telugu and ends with a consonant, and target script is Devanagari, append an आ.'),
     new WordTransformer('addVir',
         'If source word is in Devanagari and ends with a consonant, and target script is Kannada or Telugu, append a virama.'),
+    new WordTransformer('addak',
+        'If the source word is in Gurmukhi and the word contains an addak, double the next consonant.'),
+    new WordTransformer('tippi',
+        'If the source word is in Gurmukhi, replace every tippi with anusvara.'),
 ];
 
 const TRNS = [];
@@ -68,7 +72,7 @@ export function trinWord(text, srcScript, targetScript, enhanced=true, trnsSet=n
     if(srcScript === null || srcScript === targetScript) {
         return text;
     }
-    const newCodePoints = new Array(text.length);
+    let newCodePoints = new Array(text.length);
     const n = text.length;
     for(let i=0; i<n; ++i) {
         const oldCodePoint = text.codePointAt(i);
@@ -76,9 +80,9 @@ export function trinWord(text, srcScript, targetScript, enhanced=true, trnsSet=n
     }
     if(enhanced) {
         const lastOffset = newCodePoints[n-1] - targetScript.startPos;
-        const isConsonant = lastOffset >= 0x0015 && lastOffset <= 0x0039;
+        const isLastConsonant = lastOffset >= 0x0015 && lastOffset <= 0x0039;
         if((srcScript === SCRIPTS.kannada || srcScript === SCRIPTS.telugu) && targetScript === SCRIPTS.devanagari) {
-            if(isConsonant) {
+            if(isLastConsonant) {
                 newCodePoints.push(targetScript.startPos + 0x003e);
                 if(trnsSet !== null) {
                     trnsSet.add(TRNS.addA);
@@ -86,12 +90,44 @@ export function trinWord(text, srcScript, targetScript, enhanced=true, trnsSet=n
             }
         }
         else if(srcScript === SCRIPTS.devanagari && (targetScript === SCRIPTS.kannada || targetScript === SCRIPTS.telugu)) {
-            if(isConsonant) {
+            if(isLastConsonant) {
                 newCodePoints.push(targetScript.startPos + 0x004d);
                 if(trnsSet !== null) {
                     trnsSet.add(TRNS.addVir);
                 }
             }
+        }
+        else if(srcScript === SCRIPTS.gurmukhi) {
+            const modCodePoints = [];
+            for(let i=0; i<n; ++i) {
+                const cp = newCodePoints[i];
+                const offset = cp - targetScript.startPos;
+                if(offset === 0x0070) {
+                    // tippi detected
+                    modCodePoints.push(targetScript.startPos + 0x0002);
+                    if(trnsSet !== null) {
+                        trnsSet.add(TRNS.tippi);
+                    }
+                    continue;
+                }
+                else if(offset === 0x0071) {
+                    // addak detected
+                    if(i+1 < n) {
+                        const cpNext = newCodePoints[i+1];
+                        const offsetNext = cpNext - targetScript.startPos;
+                        const isNextConsonant = offsetNext >= 0x0015 && offsetNext <= 0x0039;
+                        if(isNextConsonant) {
+                            modCodePoints.push(cpNext, targetScript.startPos + 0x004d);
+                            if(trnsSet !== null) {
+                                trnsSet.add(TRNS.addak);
+                            }
+                            continue;
+                        }
+                    }
+                }
+                modCodePoints.push(cp);
+            }
+            newCodePoints = modCodePoints;
         }
     }
     return String.fromCodePoint(...newCodePoints);
